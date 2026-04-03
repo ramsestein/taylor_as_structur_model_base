@@ -147,12 +147,6 @@ python experiments/run_all_experiments.py --exp 3
 
 ---
 
-## Could this be a paper?
-
-Maybe, as a short technical note focused narrowly on polynomial mismatch detection and the C(τ) curve typology. Not as a model selection method — the data doesn't support that claim. Venues like JCMDS (Elsevier, microarticle format) or CSDA (subscription mode) could work. But the practical utility is limited: the main value is diagnostic/explanatory rather than predictive.
-
----
-
 ## License
 
 MIT. Use it, extend it, learn from the negative results.
