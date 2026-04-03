@@ -1,193 +1,163 @@
-# ΔC Framework: Polynomial Complexity-Based Mismatch Detection
+# ΔC Framework: Polynomial Complexity as a Diagnostic Probe
 
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Experiments](https://img.shields.io/badge/experiments-7%2F7%20passing-green.svg)](./results/)
 
-> **A machine learning framework for detecting model-data mismatch using polynomial complexity metrics**
-
-This repository contains the implementation and validation of the ΔC (Delta Complexity) framework, a novel approach for quantifying the mismatch between parametric (polynomial) and non-parametric (spline) model fits to identify when data requires more sophisticated modeling approaches.
-
-## 🎯 Core Concept
-
-The ΔC framework introduces a **complexity gap metric** defined as:
-
-```
-ΔC = C_test - C_train
-```
-
-Where:
-- **C_train**: Complexity of polynomial fit on training data
-- **C_test**: Complexity of polynomial fit on test data
-- **Complexity (C)**: α·degree + β·n_terms + γ·coef_norm
-
-A large ΔC indicates that the polynomial model is unstable across data splits, suggesting the data may benefit from non-parametric or more complex modeling approaches.
-
-## 📁 Repository Structure
-
-```
-delta-c-framework/
-├── README.md                    # This file
-├── LICENSE                      # MIT License
-├── requirements.txt             # Core dependencies
-├── .gitignore                   # Git ignore rules
-│
-├── src/                         # Core framework implementation
-│   ├── polynomial_fitting/      # Polynomial complexity calculation
-│   ├── complexity_estimation/   # Complexity metrics
-│   ├── data_generation/         # Synthetic data generators
-│   ├── model_training/          # Training utilities
-│   └── evaluation/              # Evaluation metrics
-│
-├── experiments/                 # Experimental framework (Exp01-Exp07)
-│   ├── requirements_experiments.txt
-│   ├── README.md
-│   ├── run_all_experiments.py   # Master runner
-│   ├── exp01_*.py - exp07_*.py   # Individual experiments
-│   └── legacy/                   # Previous experimental code
-│
-├── validation/                  # Original validation blocks (1-3)
-│   ├── validation_block1_overfitting.py
-│   ├── validation_block2_temporal.py
-│   ├── validation_block3_surrogates.py
-│   └── validation_master.py
-│
-├── demos/                       # Demo scripts
-│   └── run_demos.py
-│
-├── scripts/                     # Utility scripts
-│   └── (various utilities)
-│
-├── results/                     # Experimental outputs (gitignored)
-│   └── .gitkeep
-│
-└── docs/                        # Additional documentation
-    ├── README_Framework.md      # Technical details
-    └── README_Results.md        # Validation results
-```
-
-## 🚀 Quick Start
-
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/ramsestein/taylor_as_structur_model_base.git
-cd taylor_as_structur_model_base
-
-# Install dependencies
-pip install -r requirements.txt
-
-# For experimental features
-pip install -r experiments/requirements_experiments.txt
-```
-
-### Basic Usage
-
-```python
-import numpy as np
-from src.polynomial_fitting.fitter import PolynomialFitter
-
-# Generate synthetic data
-X = np.linspace(0, 10, 500)
-y = np.sin(2 * np.pi * X) + np.random.normal(0, 0.1, 500)
-
-# Create fitter and evaluate complexity
-fitter = PolynomialFitter(max_degree=15)
-results = fitter.evaluate_thresholds(X.reshape(-1, 1), y)
-
-# Get complexity curve
-for tau, result in results.items():
-    print(f"τ={tau}: degree={result['degree']}, C={result['complexity']:.2f}")
-```
-
-### Running Experiments
-
-```bash
-# Run all experiments (Exp01-Exp07)
-python experiments/run_all_experiments.py
-
-# Run individual experiments
-python experiments/exp03_correlation_analysis.py
-```
-
-## 📊 Key Results
-
-### Experimental Validation (7/7 Passing)
-
-| Experiment | Description | Key Finding |
-|------------|-------------|-------------|
-| **Exp01** | 30-Function Benchmark | ΔC varies significantly across 7 functional categories |
-| **Exp02** | vs AIC/BIC/CV | CV accuracy (8-23%) consistently outperforms ΔC (0-19%) |
-| **Exp03** | P/S Correlation | 11.1% functions show Pearson/Spearman sign inconsistency |
-| **Exp04** | Selection Algorithm | 27.6% accuracy (fails >70% threshold) |
-| **Exp05** | Scalability | Practical limit: dim ≤ 20 with extensions |
-| **Exp06** | Early Stopping | ΔC NOT viable as early stopping signal |
-| **Exp07** | Real Data | Valid for ensemble selection, regret < 0.03 |
-
-See [docs/README_Results.md](docs/README_Results.md) for detailed analysis.
-
-## 🔬 Framework Capabilities
-
-### ✅ What It Detects
-- **Polynomial mismatch**: When spline significantly outperforms polynomial (delta_R2_ps > 0.5)
-- **Functional family differences**: 8 separable functional categories
-- **Incremental value**: +37% over simple linear baseline
-
-### ❌ Limitations
-- **Early overfitting detection**: Low confidence (weak evidence)
-- **High-dimensional data**: Explodes combinatorially above 10D
-- **Overlapping families**: Cannot distinguish piecewise vs. oscillatory
-
-### 📐 Operating Ranges
-
-| Parameter | Useful Range | Degradation | Failure |
-|-----------|--------------|-------------|---------|
-| Dimension | 1-5 | 6-10 | >10 |
-| Samples | 100-1000 | 50-5000 | <50, >10k |
-| Noise (σ) | < 0.5 | < 1.0 | > 2.0 |
-
-## 📖 Documentation
-
-- **[docs/README_Framework.md](docs/README_Framework.md)**: Detailed framework architecture, complexity metrics, and theoretical foundations
-- **[docs/README_Results.md](docs/README_Results.md)**: Complete experimental validation results (Q1 2026)
-- **[results/MASTER_SUMMARY.md](results/MASTER_SUMMARY.md)**: Auto-generated consolidated results
-
-## 🧪 Reproducibility
-
-All experiments use fixed random seeds (`random_seed = 42`) with 30 repetitions per condition. Results are empirically supported with:
-
-- CSV data files in `results/exp*/`
-- Publication-ready figures (300 DPI, colorblind palette)
-- Detailed Markdown reports per experiment
-- Bonferroni-corrected statistical tests
-
-## 🤝 Citation
-
-If you use this framework in your research, please cite:
-
-```bibtex
-@software{delta_c_framework_2026,
-  title = {ΔC Framework: Polynomial Complexity-Based Mismatch Detection},
-  author = {Author Name},
-  year = {2026},
-  note = {Experimental validation framework for model selection},
-  url = {https://github.com/ramsestein/taylor_as_structur_model_base}
-}
-```
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- Validation standards follow NeurIPS/ICML/Nature ML guidelines
-- Experimental design inspired by rigorous ML reproducibility standards
-- Colorblind-friendly visualizations using seaborn colorblind palette
+> An exploratory framework that uses polynomial fitting complexity to diagnose data-model compatibility. Open-sourced as-is with full experimental results and honest limitations.
 
 ---
 
-**Status**: Framework validated with documented limitations  
-**Last Updated**: 2026-04-03  
-**Experiments**: 7/7 passing (1607s total runtime)
+## What this is (and what it isn't)
+
+This project started as an attempt to build a **universal complexity metric** for functions and a **model family selector** based on polynomial surrogate analysis. After extensive experimentation (29 synthetic functions, 7 formal experiments, 3 real datasets), the results showed that:
+
+- **It does not work** as a model family selector (27.6% accuracy, CI [0.138, 0.448])
+- **It does not work** as an early stopping signal (100% premature stopping, ~350 samples off)
+- **It does not compete** with cross-validation for model selection (CV consistently wins)
+
+**What it does do**, modestly but reliably:
+
+- Detects when polynomial bases are structurally inadequate for a dataset (mismatch detection)
+- Produces a typology of complexity curves C(τ) — flat, jump, diverging, failed — that characterizes function-base compatibility
+- Shows extremely high reproducibility (CV < 0.001 across seeds)
+
+This repo is published as an open record of the exploration: what was tried, what worked, what didn't, and why.
+
+---
+
+## Core idea
+
+Fit polynomials of increasing degree to data. Measure a complexity metric:
+
+```
+C = α·degree + β·n_terms + γ·‖coefficients‖
+```
+
+Compare C across train/test splits (ΔC) and against non-parametric fits (splines, GAMs). Large discrepancies signal that the polynomial basis is a poor match for the data structure.
+
+The interesting finding is not ΔC itself, but the **pattern of failure**: how and where polynomials break tells you something about the data.
+
+---
+
+## Key results
+
+### What works
+
+| Finding | Evidence |
+|---------|----------|
+| Mismatch detection | Oscillatory functions: poly R²=0.06 vs spline R²=0.95 (delta_R2 ≈ 0.94) |
+| Regime separation | ΔC separates underfit/well-fit/overfit regimes (ANOVA F=246.9, p<0.001) |
+| Curve typology | 4 curve types (flat/jump/diverging/failed) map to function-base compatibility |
+| Reproducibility | CV < 0.001 across all multi-seed tests |
+| Robustness | Stable under perturbation (scale, noise): variation < 5% |
+
+### What doesn't work
+
+| Claim tested | Result | Verdict |
+|-------------|--------|---------|
+| Model family selection | 27.6% accuracy (target was >70%) | ✗ Failed |
+| Beats cross-validation | CV accuracy 8-23% vs ΔC 0-19% | ✗ CV wins |
+| Early stopping signal | All criteria stop ~350 samples too early | ✗ Not viable |
+| High-dimensional data | Combinatorial explosion above dim 5-10 | ✗ Structural limit |
+| Universal complexity metric | Measures poly-compatibility, not intrinsic complexity | ✗ Reframed |
+
+### Pearson/Spearman inconsistency
+
+ΔC vs gap shows Pearson r=0.607 but Spearman ρ=−0.139 (sign inversion). Log-transform and winsorization partially resolve this (8/9 and 7/9 cases respectively), but the underlying non-monotonicity remains a methodological issue. This is documented, not resolved.
+
+---
+
+## Experiments
+
+Seven experiments were run, all reproducible with fixed seeds:
+
+| Exp | What | Runtime | Key number |
+|-----|------|---------|------------|
+| 01 | 30-function benchmark across 7 categories | 18.7s | ΔC varies significantly by category |
+| 02 | Head-to-head vs AIC/BIC/CV | 250s | CV wins on selection accuracy |
+| 03 | Pearson/Spearman diagnostic | 6.6s | 11.1% sign inconsistency rate |
+| 04 | Formal selection algorithm with grid search | 29s | 27.6% accuracy, below 70% target |
+| 05 | Dimensional scaling (2D to 20D) | 66s | Practical limit: dim ≤ 5 standard, ≤ 20 with extensions |
+| 06 | Early stopping feasibility | 4.8s | Not feasible (100% premature) |
+| 07 | Real datasets (diabetes, california, friedman) | 30s | Regret < 0.03 but recommends "ensemble" for everything |
+
+Total runtime: ~27 minutes on local GPU. All results in `results/`.
+
+---
+
+## Operating range
+
+| Parameter | Works | Degrades | Fails |
+|-----------|-------|----------|-------|
+| Dimensions | 1–5 | 6–10 | >10 |
+| Samples | 100–1000 | 50–5000 | <50 or >10k |
+| Noise (σ) | < 0.5 | < 1.0 | > 2.0 |
+
+---
+
+## Repo structure
+
+```
+├── src/                         # Core framework
+│   ├── polynomial_fitting/      # Polynomial complexity calculation
+│   ├── complexity_estimation/   # C metric components
+│   ├── data_generation/         # Synthetic data generators
+│   ├── model_training/          # Training utilities
+│   └── evaluation/              # Surrogate comparison (spline, GAM, piecewise)
+│
+├── experiments/                 # Exp01–Exp07
+│   ├── run_all_experiments.py   # Master runner (supports --exp N, --skip N)
+│   └── exp01_*.py – exp07_*.py
+│
+├── validation/                  # Original validation blocks (1–3)
+├── results/                     # All outputs: CSV, PNG (300 dpi), JSON
+└── docs/
+    ├── README_Framework.md      # Technical architecture
+    └── README_Results.md        # Full results with tables
+```
+
+## Setup
+
+```bash
+git clone https://github.com/ramsestein/taylor_as_structur_model_base.git
+cd taylor_as_structur_model_base
+pip install -r requirements.txt
+pip install -r experiments/requirements_experiments.txt
+
+# Run everything
+python experiments/run_all_experiments.py
+
+# Run one experiment
+python experiments/run_all_experiments.py --exp 3
+```
+
+---
+
+## What I learned
+
+1. **Polynomial mismatch is informative but not actionable enough.** Knowing that "your data doesn't fit a polynomial" is less useful than just trying several models — which is what CV already does, faster.
+
+2. **The trade-off between fidelity and detectability is real.** Flexible bases (splines, GAMs) fit everything well but eliminate the complexity signal. The diagnostic power comes precisely from the polynomial's rigidity. This is conceptually interesting but practically limiting.
+
+3. **Negative results matter.** The early stopping failure (Exp06) and the model selection failure (Exp04) are clear, reproducible results. They save others from going down the same path.
+
+4. **The Pearson/Spearman sign inversion is a real problem.** Post-hoc corrections (winsorization, log-transform) help but don't fully resolve it. Anyone building on this work needs to address the non-monotonicity of ΔC vs generalization gap.
+
+5. **Reproducibility was the easy part.** CV < 0.001 across seeds. The hard part is having something worth reproducing.
+
+---
+
+## Could this be a paper?
+
+Maybe, as a short technical note focused narrowly on polynomial mismatch detection and the C(τ) curve typology. Not as a model selection method — the data doesn't support that claim. Venues like JCMDS (Elsevier, microarticle format) or CSDA (subscription mode) could work. But the practical utility is limited: the main value is diagnostic/explanatory rather than predictive.
+
+---
+
+## License
+
+MIT. Use it, extend it, learn from the negative results.
+
+---
+
+*Last updated: 2026-04-03*
+*Status: Exploration complete. Results documented. Moving on.*
