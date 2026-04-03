@@ -1,0 +1,289 @@
+{
+  "critical_measurements": {
+    "block1_base_diff.csv": {
+      "exists": true,
+      "rows": 7,
+      "columns": [
+        "function",
+        "dim",
+        "poly_R2",
+        "spline_R2",
+        "gam_R2",
+        "poly_C",
+        "spline_C",
+        "gam_C",
+        "delta_R2_ps",
+        "delta_R2_pg",
+        "delta_C_ps",
+        "delta_C_pg"
+      ]
+    },
+    "block2_tau.csv": {
+      "exists": true,
+      "rows": 7,
+      "columns": [
+        "function",
+        "poly_max_tau",
+        "poly_fail",
+        "spline_max_tau",
+        "spline_fail",
+        "gam_max_tau",
+        "gam_fail"
+      ]
+    },
+    "block3_efficiency.csv": {
+      "exists": true,
+      "rows": 7,
+      "columns": [
+        "function",
+        "poly_C",
+        "spline_C",
+        "gam_C",
+        "poly_R2",
+        "spline_R2",
+        "gam_R2",
+        "ratio_C_ps",
+        "ratio_C_pg",
+        "efficiency_poly",
+        "efficiency_spline",
+        "efficiency_gam"
+      ]
+    },
+    "block4_temporal.csv": {
+      "exists": true,
+      "rows": 60,
+      "columns": [
+        "epoch",
+        "regime",
+        "train_loss",
+        "val_loss",
+        "test_loss",
+        "C_nn",
+        "C_real",
+        "delta_C",
+        "gap",
+        "dC",
+        "d_gap",
+        "ratio_C"
+      ]
+    },
+    "block5_regimes.csv": {
+      "exists": true,
+      "rows": 3,
+      "columns": [
+        "regime",
+        "mean_C_nn",
+        "mean_delta_C",
+        "mean_dC",
+        "mean_gap",
+        "std_C",
+        "std_dC",
+        "std_delta_C"
+      ]
+    },
+    "block6_correlations.csv": {
+      "exists": true,
+      "rows": 4,
+      "columns": [
+        "variable_1",
+        "variable_2",
+        "pearson_r",
+        "spearman_r",
+        "p_value"
+      ]
+    },
+    "block7_robustness.csv": {
+      "exists": true,
+      "rows": 6,
+      "columns": [
+        "function",
+        "metric",
+        "mean",
+        "std",
+        "CV"
+      ]
+    },
+    "block8_function_properties.csv": {
+      "exists": true,
+      "rows": 7,
+      "columns": [
+        "function",
+        "dim",
+        "freq_estimate",
+        "interactions",
+        "poly_C",
+        "spline_C",
+        "delta_R2_ps"
+      ]
+    }
+  },
+  "final_experiments": {
+    "blockA_model_family_prediction.csv": {
+      "exists": true,
+      "rows": 4,
+      "columns": [
+        "function",
+        "family_type",
+        "delta_R2_ps",
+        "ratio_C_ps",
+        "poly_max_tau",
+        "poly_C",
+        "linear_test",
+        "linear_gap",
+        "linear_time",
+        "linear_params",
+        "poly_test",
+        "poly_gap",
+        "poly_time",
+        "poly_params",
+        "tree_test",
+        "tree_gap",
+        "tree_time",
+        "tree_params",
+        "rf_test",
+        "rf_gap",
+        "rf_time",
+        "rf_params",
+        "gb_test",
+        "gb_gap",
+        "gb_time",
+        "gb_params",
+        "nn_small_test",
+        "nn_small_gap",
+        "nn_small_time",
+        "nn_small_params",
+        "nn_large_test",
+        "nn_large_gap",
+        "nn_large_time",
+        "nn_large_params",
+        "best_family",
+        "best_test_score"
+      ]
+    },
+    "blockB_mismatch_disambiguation.csv": {
+      "exists": true,
+      "rows": 24,
+      "columns": [
+        "function",
+        "family",
+        "dim",
+        "poly_R2",
+        "spline_R2",
+        "poly_C",
+        "delta_R2_ps",
+        "ratio_C_ps",
+        "poly_max_tau"
+      ]
+    },
+    "blockC_incremental_value.csv": {
+      "exists": true,
+      "rows": 3,
+      "columns": [
+        "predictor_set",
+        "target",
+        "accuracy",
+        "macro_f1",
+        "auc"
+      ]
+    },
+    "blockD_temporal_reframed.csv": {
+      "exists": true,
+      "rows": 300,
+      "columns": [
+        "epoch",
+        "regime",
+        "scenario",
+        "C_nn",
+        "delta_C",
+        "ratio_C",
+        "train_loss",
+        "val_loss",
+        "gap"
+      ]
+    },
+    "blockE_real_datasets.csv": {
+      "exists": true,
+      "rows": 9,
+      "columns": [
+        "dataset",
+        "dataset_type",
+        "n",
+        "p",
+        "delta_R2_ps",
+        "ratio_C_ps",
+        "poly_max_tau",
+        "poly_C",
+        "best_family",
+        "overfit_flag"
+      ]
+    },
+    "blockF_scalability.csv": {
+      "exists": true,
+      "rows": 7,
+      "columns": [
+        "experiment",
+        "dim",
+        "n_samples",
+        "runtime_s",
+        "poly_C",
+        "success"
+      ]
+    },
+    "blockG_robustness.csv": {
+      "exists": true,
+      "rows": 24,
+      "columns": [
+        "function",
+        "perturbation",
+        "trial",
+        "delta_R2_ps",
+        "poly_C",
+        "poly_max_tau",
+        "stable"
+      ]
+    },
+    "blockH_utility_matrix.csv": {
+      "exists": true,
+      "rows": 6,
+      "columns": [
+        "question",
+        "metric_used",
+        "evidence_strength",
+        "works_when",
+        "fails_when"
+      ]
+    }
+  },
+  "validation_blocks": {
+    "block1": {
+      "exists": false
+    },
+    "block2": {
+      "exists": true,
+      "files": [
+        "summary_table.md",
+        "temporal_analysis.json"
+      ]
+    },
+    "block3": {
+      "exists": true,
+      "files": [
+        "analysis.json",
+        "benchmark_results.csv",
+        "benchmark_summary.md"
+      ]
+    }
+  },
+  "issues": [],
+  "status": "COMPLETE",
+  "full_execution": {
+    "exists": true
+  },
+  "summary": {
+    "total_blocks": 16,
+    "complete_blocks": 16,
+    "completion_rate": 1.0,
+    "critical_measurements_complete": "8/8",
+    "final_experiments_complete": "8/8"
+  }
+}

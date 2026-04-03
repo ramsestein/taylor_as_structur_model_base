@@ -1,0 +1,4 @@
+dataset,recommended,cv_choice
+diabetes,ensemble,linear
+california,ensemble,ensemble
+friedman1,ensemble,ensemble

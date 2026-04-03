@@ -1,0 +1,48 @@
+{
+  "timestamp": "2026-04-03 17:33:40",
+  "total_time": 1607.4260058403015,
+  "experiments": [
+    {
+      "id": 1,
+      "name": "Benchmark ampliado de funciones",
+      "success": true,
+      "time": 17.230287075042725
+    },
+    {
+      "id": 2,
+      "name": "Benchmark vs m\u00e9todos de selecci\u00f3n",
+      "success": true,
+      "time": 199.57943749427795
+    },
+    {
+      "id": 3,
+      "name": "Diagn\u00f3stico inconsistencia P/S",
+      "success": true,
+      "time": 207.10690641403198
+    },
+    {
+      "id": 4,
+      "name": "Algoritmo formal de selecci\u00f3n",
+      "success": true,
+      "time": 236.1433229446411
+    },
+    {
+      "id": 5,
+      "name": "Escalabilidad dimensional",
+      "success": true,
+      "time": 302.54886198043823
+    },
+    {
+      "id": 6,
+      "name": "Din\u00e1mica temporal y early stopping",
+      "success": true,
+      "time": 307.3264274597168
+    },
+    {
+      "id": 7,
+      "name": "Caso de uso con datos reales",
+      "success": true,
+      "time": 337.4907624721527
+    }
+  ]
+}

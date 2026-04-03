@@ -1,0 +1,11 @@
+function,oracle,deltaC_correct,cv_correct
+linear,polynomial,False,True
+quadratic,polynomial,False,True
+cubic,polynomial,False,True
+poly_high,polynomial,False,True
+sine_simple,complex,False,True
+sine_high_freq,nonparametric,True,True
+sine_modulated,nonparametric,False,True
+chirp,complex,False,True
+sawtooth,complex,False,True
+step,complex,True,True
